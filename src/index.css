@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Global base ─────────────────────────────────────────── */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-cream text-maroon-dark font-sans antialiased;
+    background-color: #FFFDD0;
+  }
+
+  h1, h2, h3 { @apply font-serif; }
+
+  /* Kannada text helper — change font-kannada in tailwind.config.js to restyle */
+  .kannada { @apply font-kannada; }
+}
+
+/* ── Reusable components ─────────────────────────────────── */
+@layer components {
+
+  /* Gold shimmer divider */
+  .divider-temple {
+    @apply w-full h-px my-2;
+    background: linear-gradient(90deg, transparent 0%, #D4AF37 30%, #800000 50%, #D4AF37 70%, transparent 100%);
+  }
+
+  /* Gopuram-inspired card border */
+  .card-temple {
+    border: 2px solid #D4AF37;
+    border-top: 6px solid #800000;
+    border-radius: 0 0 12px 12px;
+    position: relative;
+  }
+  .card-temple::before {
+    content: "";
+    display: block;
+    height: 6px;
+    background: repeating-linear-gradient(
+      90deg,
+      #D4AF37 0px, #D4AF37 8px,
+      #800000 8px, #800000 16px
+    );
+    position: absolute;
+    top: -6px;
+    left: -2px;
+    right: -2px;
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* Section heading underline */
+  .heading-underline {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+  }
+  .heading-underline::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #D4AF37, #800000, #D4AF37);
+    border-radius: 9999px;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3 bg-maroon text-cream font-semibold rounded-sm
+           border-2 border-gold hover:bg-maroon-light transition-all duration-300
+           shadow-maroon hover:shadow-gold-lg;
+  }
+
+  /* Gold outline button */
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-7 py-3 border-2 border-gold text-gold font-semibold
+           rounded-sm hover:bg-gold hover:text-maroon transition-all duration-300 shadow-gold;
+  }
+
+  /* Rangoli / lotus background layer  */
+  .bg-rangoli {
+    background-color: #FFFDD0;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(212,175,55,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(128,0,0,0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath d='M40 2 L46 28 L72 34 L46 40 L40 66 L34 40 L8 34 L34 28Z' fill='%23D4AF37' fill-opacity='0.05'/%3E%3Ccircle cx='40' cy='34' r='5' fill='%23D4AF37' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Temple top border for sections */
+  .border-temple-top {
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(90deg, transparent, #D4AF37, #800000, #D4AF37, transparent) 1;
+  }
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 2px 12px rgba(212,175,55,0.5), 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .text-shadow-dark {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  }
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #D4AF37 0%, #FFDB58 40%, #D4AF37 70%, #b8952e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .maroon-gradient-text {
+    background: linear-gradient(135deg, #800000 0%, #A52828 50%, #5C0000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
