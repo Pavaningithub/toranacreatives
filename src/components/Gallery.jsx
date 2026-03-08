@@ -24,62 +24,6 @@ const GALLERY_ITEMS = [
     label: "Our Work",
     category: "Grahapravesha",
   },
-  {
-    id: 3,
-    // Vibrant marigold garlands — torana flower strings
-    url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85",
-    alt: "Bright marigold garlands and flower strings for a Hindu festival",
-    label: "Marigold Torana",
-    category: "Floral",
-  },
-  {
-    id: 4,
-    // Colourful Kolam / Rangoli at entrance
-    url: "https://images.unsplash.com/photo-1617450365226-9bf28c04e130?w=800&q=85",
-    alt: "Intricate colourful Kolam Rangoli drawn at the entrance of a South Indian home",
-    label: "Entrance Kolam",
-    category: "Grahapravesha",
-  },
-  {
-    id: 5,
-    // Havan / sacred fire ritual
-    url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=85",
-    alt: "Sacred Havan fire ritual with vedic priest performing homa",
-    label: "Havan Ritual",
-    category: "Upanayana",
-  },
-  {
-    id: 6,
-    // Traditional South Indian banana leaf feast — sadya
-    url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=85",
-    alt: "Traditional South Indian feast served on fresh banana leaves",
-    label: "Banana Leaf Sadya",
-    category: "Wedding",
-  },
-  {
-    id: 7,
-    // Fresh jasmine flower garlands — gajra for South Indian bride
-    url: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&q=85",
-    alt: "Fresh jasmine and marigold flower garlands used in South Indian weddings",
-    label: "Jasmine Garlands",
-    category: "Floral",
-  },
-  {
-    id: 8,
-    // South Indian temple gopuram
-    url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=85",
-    alt: "Colourful South Indian temple gopuram tower with traditional sculptures",
-    label: "Temple Gopuram",
-    category: "Wedding",
-  },
-  {
-    id: 9,
-    // Puja offering flowers — marigold and rose petals in a brass plate
-    url: "https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=800&q=85",
-    alt: "Traditional puja offering with marigold flowers and rose petals",
-    label: "Puja Offerings",
-    category: "Grahapravesha",
-  },
 ];
 
 const CATEGORIES = ["All", "Wedding", "Floral", "Grahapravesha", "Upanayana"];
