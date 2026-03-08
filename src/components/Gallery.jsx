@@ -12,18 +12,16 @@ import { RangoliDivider } from "./Decorations";
 const GALLERY_ITEMS = [
   {
     id: 1,
-    // South Indian traditional wedding ceremony — couple at floral mandap
-    url: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800&q=85",
-    alt: "South Indian traditional Hindu wedding couple at a floral mandap",
-    label: "Wedding Ceremony",
+    url: "/gallery/image1.png",
+    alt: "Torana Creatives event photo 1",
+    label: "Our Work",
     category: "Wedding",
   },
   {
     id: 2,
-    // Lit oil diyas for puja — rows of earthen lamps
-    url: "https://images.unsplash.com/photo-1605289982774-9a6fef564df8?w=800&q=85",
-    alt: "Rows of lit clay diyas during a traditional puja ceremony",
-    label: "Diya Puja",
+    url: "/gallery/image2.jpg",
+    alt: "Torana Creatives event photo 2",
+    label: "Our Work",
     category: "Grahapravesha",
   },
   {
