@@ -15,6 +15,3 @@ export const LOCATION        = "Bengaluru, Karnataka";
 export const INSTAGRAM_HANDLE  = "torana_creatives";          // ← your IG handle (no @)
 export const FACEBOOK_PAGE     = "";                           // ← paste your FB page name/ID once created
 export const FACEBOOK_ENABLED  = false;                        // ← flip to true once FB page is live
-
-
-export const LOCATION = "Bengaluru, Karnataka";
