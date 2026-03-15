@@ -6,7 +6,7 @@ const EVENT_TYPES = [
   "Gruhapravesha (Housewarming)",
   "Upanayana (Thread Ceremony)",
   "Birthday Celebration",
-  "Sashtipoorthi (60th Birthday)",
+  "Shashtipoorthi (60th Birthday)",
   "Seemantha / Baby Shower",
   "Other South Indian Event",
 ];

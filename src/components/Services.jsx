@@ -43,7 +43,7 @@ const SERVICES = [
   },
   {
     icon: "🙏",
-    title: "Sashtipoorthi — 60th Birthday",
+    title: "Shashtipoorthi — 60th Birthday",
     kannada: "ಷಷ್ಟ್ಯಬ್ಧಪೂರ್ತಿ",
     desc: "A sacred milestone — honour your elders' 60th year with a grand Vedic celebration combining Saptapadi renewal, Pada Pooja, and traditional South Indian festivity.",
     highlights: ["Vedic rituals & Saptapadi", "Pada Pooja ceremony", "Traditional décor", "Pandit coordination"],
