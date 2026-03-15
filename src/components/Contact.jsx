@@ -2,12 +2,11 @@ import { useState } from "react";
 import { CONTACT_EMAIL, WHATSAPP_NUMBER, LOCATION } from "../config/launch";
 
 const EVENT_TYPES = [
-  "Traditional Wedding & Muhurtham",
+  "Traditional Wedding & Muhurtha",
   "Gruhapravesha (Housewarming)",
   "Upanayana (Thread Ceremony)",
-  "Floral & Eco-friendly Decor",
   "Seemantha / Baby Shower",
-  "Sashtiabdapoorthi (60th Birthday)",
+  "Shashti poorthi (60th Birthday)",
   "Other South Indian Event",
 ];
 
