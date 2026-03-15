@@ -96,8 +96,21 @@
   }
 }
 
-/* ── Animations ──────────────────────────────────────────── */
-@layer utilities {
+/* ── Custom keyframes ───────────────────────────────────── */
+@keyframes floatDiya {
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50%       { transform: translateY(-14px) rotate(3deg); }
+}
+@keyframes scrollDot {
+  0%   { transform: translateY(0);    opacity: 1; }
+  80%  { transform: translateY(14px); opacity: 0; }
+  81%  { transform: translateY(0);    opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
   .text-shadow-gold {
     text-shadow: 0 2px 12px rgba(212,175,55,0.5), 0 1px 3px rgba(0,0,0,0.3);
   }
