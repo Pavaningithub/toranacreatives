@@ -67,7 +67,7 @@ function Stars({ count = 5 }) {
 function TestimonialCard({ t, active }) {
   return (
     <div
-      className={`absolute inset-0 transition-all duration-700 flex flex-col justify-between p-8 sm:p-10 rounded-2xl ${active ? "opacity-100 translate-x-0 scale-100" : "opacity-0 translate-x-8 scale-95 pointer-events-none"}`}
+      className={`absolute inset-0 transition-all duration-700 flex flex-col justify-between p-5 sm:p-8 lg:p-10 rounded-2xl ${active ? "opacity-100 translate-x-0 scale-100" : "opacity-0 translate-x-8 scale-95 pointer-events-none"}`}
       style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))", border: "1px solid rgba(212,175,55,0.2)" }}
     >
       {/* Quote mark */}
@@ -75,7 +75,7 @@ function TestimonialCard({ t, active }) {
 
       <div className="relative z-10">
         <Stars count={t.rating} />
-        <p className="mt-5 font-serif text-lg sm:text-xl text-cream/90 italic leading-relaxed">
+        <p className="mt-4 font-serif text-base sm:text-lg lg:text-xl text-cream/90 italic leading-relaxed">
           "{t.text}"
         </p>
       </div>
@@ -144,7 +144,7 @@ export default function Testimonials() {
         </div>
 
         {/* Carousel */}
-        <div className="relative" style={{ minHeight: 280 }}>
+        <div className="relative" style={{ minHeight: "clamp(300px, 50vw, 340px)" }}>
           {SEED_TESTIMONIALS.map((t, i) => (
             <TestimonialCard key={t.id} t={t} active={i === active} />
           ))}
@@ -213,14 +213,14 @@ export default function Testimonials() {
                   className="w-full rounded-lg px-4 py-3 font-sans text-sm bg-white/10 border border-gold/25 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/20 resize-none" />
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button type="submit"
                   className="flex-1 py-3 font-sans font-bold text-sm tracking-wider uppercase rounded-lg transition-all hover:scale-[1.02]"
                   style={{ background: "linear-gradient(135deg,#D4AF37,#c9991e)", color: "#080000" }}>
                   Send via WhatsApp
                 </button>
                 <button type="button" onClick={() => setShowForm(false)}
-                  className="px-5 py-3 font-sans text-sm rounded-lg border border-cream/20 text-cream/50 hover:border-cream/40 transition-all">
+                  className="sm:flex-initial px-5 py-3 font-sans text-sm rounded-lg border border-cream/20 text-cream/50 hover:border-cream/40 transition-all">
                   Cancel
                 </button>
               </div>

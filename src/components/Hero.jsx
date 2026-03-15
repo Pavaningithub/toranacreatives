@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { STATS_ENABLED, EVENTS_COUNT, YEARS_COUNT, RITUALS_COUNT, FAMILIES_COUNT } from "../config/launch";
 
 const TICKER = [
   "ಶುಭ ಮುಹೂರ್ತ · Auspicious Beginnings",
@@ -68,7 +69,8 @@ export default function Hero() {
       {/* Gold radial glow */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse 70% 55% at 50% 42%, rgba(212,175,55,0.16) 0%, transparent 68%)" }} />
 
-      {/* Floating diyas */}
+      {/* Floating diyas — hidden on very small screens to avoid overflow */}
+      <div className="hidden sm:block">
       {[
         { top:"14%", left:"5%",   dur:"5.2s", delay:"0s"   },
         { top:"72%", left:"3.5%", dur:"6.1s", delay:"1.3s" },
@@ -77,17 +79,18 @@ export default function Hero() {
         { top:"48%", left:"9%",   dur:"7s",   delay:"1.9s" },
         { top:"58%", right:"11%", dur:"6.5s", delay:"0.4s" },
       ].map((s, i) => <DiyaIcon key={i} style={{ ...s, zIndex: 3 }} />)}
+      </div>
 
       {/* Content */}
-      <div className={`relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-14 text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+      <div className={`relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-10 sm:pb-14 text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
 
         {/* Om + eyebrow */}
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/50" />
-          <span className="text-gold/70 font-sans text-xs sm:text-sm tracking-[0.4em] uppercase font-semibold">
+        <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
+          <span className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-gold/50" />
+          <span className="text-gold/70 font-sans text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.4em] uppercase font-semibold">
             ॐ &nbsp; Brahmin · South Indian Traditions &nbsp; ॐ
           </span>
-          <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold/50" />
+          <span className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-gold/50" />
         </div>
 
         {/* Brand name */}
@@ -109,14 +112,14 @@ export default function Hero() {
         </h1>
 
         {/* Divider dots */}
-        <div className="flex items-center justify-center gap-2 my-7">
-          <span className="h-px w-20 bg-gradient-to-r from-transparent to-gold/50" />
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 my-7 flex-wrap">
+          <span className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-gold/50" />
           {[8,12,8].map((s, i) => <span key={i} className="rounded-full bg-gold inline-block flex-shrink-0" style={{ width: s, height: s, opacity: i === 1 ? 0.9 : 0.45 }} />)}
           <span className="text-gold/50 text-lg mx-1 font-serif select-none">✦</span>
-          <span className="text-gold/60 font-sans text-[10px] tracking-[0.55em] uppercase">Est. Bengaluru</span>
-          <span className="text-gold/50 text-lg mx-1 font-serif select-none">✦</span>
+          <span className="text-gold/60 font-sans text-[9px] sm:text-[10px] tracking-[0.35em] sm:tracking-[0.55em] uppercase hidden xs:inline">Est. Bengaluru</span>
+          <span className="text-gold/50 text-lg mx-1 font-serif select-none hidden xs:inline">✦</span>
           {[8,12,8].map((s, i) => <span key={i} className="rounded-full bg-gold inline-block flex-shrink-0" style={{ width: s, height: s, opacity: i === 1 ? 0.45 : 0.9 }} />)}
-          <span className="h-px w-20 bg-gradient-to-l from-transparent to-gold/50" />
+          <span className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-gold/50" />
         </div>
 
         {/* Tagline */}
@@ -132,29 +135,31 @@ export default function Hero() {
         </p>
 
         {/* Stats strip */}
+        {STATS_ENABLED && (
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-9">
-          {[["200+","Events"],["8+","Years"],["50+","Rituals"],["1000+","Families"]].map(([n,l]) => (
+          {[[`${EVENTS_COUNT}+`,"Events"],[`${YEARS_COUNT}+`,"Years"],[`${RITUALS_COUNT}+`,"Rituals"],[`${FAMILIES_COUNT}+`,"Families"]].map(([n,l]) => (
             <div key={l} className="text-center">
               <div className="font-display font-bold" style={{ fontSize: "clamp(1.4rem,3vw,2rem)", background: "linear-gradient(135deg,#FFDB58,#D4AF37)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{n}</div>
               <div className="text-cream/35 text-[10px] uppercase tracking-widest font-sans mt-0.5">{l}</div>
             </div>
           ))}
         </div>
+        )}
 
         {/* CTAs */}
-        <div className="mt-11 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="mt-11 flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
           <button onClick={() => scrollTo("#contact")}
-            className="group relative overflow-hidden px-10 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm"
+            className="group relative overflow-hidden px-8 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm w-full sm:w-auto"
             style={{ background: "linear-gradient(135deg,#D4AF37,#c9991e)", color: "#080000", boxShadow: "0 0 36px rgba(212,175,55,0.38)" }}>
-            <span className="relative z-10 flex items-center gap-2">🪔 Book Your Event</span>
+            <span className="relative z-10 flex items-center justify-center gap-2">🪔 Book Your Event</span>
             <span className="absolute inset-0 bg-white/25 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </button>
           <button onClick={() => scrollTo("#services")}
-            className="px-10 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm border-2 border-gold/55 text-gold hover:bg-gold/10 transition-all duration-300">
+            className="px-8 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm border-2 border-gold/55 text-gold hover:bg-gold/10 transition-all duration-300 w-full sm:w-auto">
             ✦ Our Services
           </button>
           <button onClick={() => scrollTo("#gallery")}
-            className="px-10 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm border border-cream/12 text-cream/50 hover:border-cream/35 hover:text-cream transition-all duration-300">
+            className="px-8 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm border border-cream/12 text-cream/50 hover:border-cream/35 hover:text-cream transition-all duration-300 w-full sm:w-auto">
             View Gallery
           </button>
         </div>

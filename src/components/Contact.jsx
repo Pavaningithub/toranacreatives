@@ -99,8 +99,8 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
-          {/* Sidebar */}
-          <div className="lg:col-span-2 space-y-5">
+          {/* Sidebar — shown BELOW form on mobile */}
+          <div className="lg:col-span-2 order-2 lg:order-1 space-y-5">
             <div className="rounded-2xl p-6 space-y-5" style={{ background: "linear-gradient(135deg,#2d0000,#5c0000)", border: "1px solid rgba(212,175,55,0.2)" }}>
               <h3 className="font-serif text-xl text-gold-light">Reach Us Directly</h3>
               {[
@@ -115,22 +115,13 @@ export default function Contact() {
               ))}
             </div>
 
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Namaskara! I'd like to enquire about Torana (ತೋರಣ) Creatives services.")}`}
-              target="_blank" rel="noopener noreferrer"
-              aria-label="Chat on WhatsApp"
-              className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-semibold text-sm tracking-wide text-white transition-all hover:scale-[1.02]"
-              style={{ background: "linear-gradient(135deg,#25D366,#1ebe5e)" }}
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              Chat on WhatsApp
-            </a>
+
           </div>
 
-          {/* Form */}
+          {/* Form — shown FIRST on mobile */}
           <form
             onSubmit={handleSubmit}
-            className="lg:col-span-3 rounded-2xl p-6 sm:p-8 space-y-5 bg-white shadow-gold"
+            className="lg:col-span-3 order-1 lg:order-2 rounded-2xl p-5 sm:p-8 space-y-5 bg-white shadow-gold"
             style={{ border: "1px solid rgba(212,175,55,0.15)" }}
           >
             <h3 className="font-serif text-xl text-maroon">Enquiry Form</h3>

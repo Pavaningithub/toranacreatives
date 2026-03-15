@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { STATS_ENABLED, EVENTS_COUNT, YEARS_COUNT, RITUALS_COUNT, FAMILIES_COUNT } from "../config/launch";
 
-const STATS = [
-  { num: 200, suffix: "+", label: "Events Completed" },
-  { num: 8,   suffix: "+", label: "Years of Expertise" },
-  { num: 50,  suffix: "+", label: "Unique Rituals" },
-  { num: 100, suffix: "%", label: "Eco-Friendly" },
-];
+function getStats() {
+  return [
+    { num: EVENTS_COUNT,  suffix: "+", label: "Events Completed" },
+    { num: YEARS_COUNT,   suffix: "+", label: "Years of Expertise" },
+    { num: RITUALS_COUNT, suffix: "+", label: "Unique Rituals" },
+    { num: FAMILIES_COUNT,suffix: "+", label: "Families Served" },
+  ];
+}
 
 const VALUES = [
   { icon: "🪷", title: "Rooted in Tradition",   desc: "Every ritual honours centuries of South Indian heritage." },
@@ -82,8 +85,9 @@ export default function About() {
             </p>
 
             {/* Stats */}
-            <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
-              {STATS.map(({ num, suffix, label }) => (
+            {STATS_ENABLED && (
+            <div ref={ref} className="grid grid-cols-2 gap-4 pt-4">
+              {getStats().map(({ num, suffix, label }) => (
                 <div
                   key={label}
                   className="rounded-xl p-4 text-center"
@@ -96,6 +100,7 @@ export default function About() {
                 </div>
               ))}
             </div>
+            )}
           </div>
 
           {/* Values */}

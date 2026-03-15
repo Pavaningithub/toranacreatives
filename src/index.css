@@ -4,11 +4,17 @@
 
 /* ── Global base ─────────────────────────────────────────── */
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
 
   body {
     @apply bg-cream text-maroon-dark font-sans antialiased;
     background-color: #FFFDD0;
+    overflow-x: hidden;
+    /* Prevent pull-to-dismiss interfering with sticky navbar */
+    overscroll-behavior-y: contain;
   }
 
   h1, h2, h3 { @apply font-serif; }
