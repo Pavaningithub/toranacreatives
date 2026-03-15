@@ -33,7 +33,7 @@ const SEED_TESTIMONIALS = [
   {
     id: 3,
     name: "Priya & Anand Bhat",
-    event: "Grahapravesha",
+    event: "Gruhapravesha",
     location: "Whitefield, Bengaluru",
     rating: 5,
     text: "Our Griha Pravesha was as auspicious as we dreamed. The Rangoli at the entrance, the banana leaf décor, the puja setup — everything was perfect. Team Torana was so calm and professional throughout.",
@@ -190,7 +190,7 @@ export default function Testimonials() {
 
               <div>
                 <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
-                <input type="text" value={form.event} onChange={update("event")} placeholder="e.g. Wedding, Upanayana, Grahapravesha"
+                <input type="text" value={form.event} onChange={update("event")} placeholder="e.g. Wedding, Upanayana, Gruhapravesha"
                   className="w-full rounded-lg px-4 py-3 font-sans text-sm bg-white/10 border border-gold/25 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/20" />
               </div>
 
