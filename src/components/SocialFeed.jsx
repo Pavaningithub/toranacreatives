@@ -44,12 +44,7 @@ function InstagramEmbed({ handle }) {
         </div>
       </a>
 
-      <p className="mt-5 text-center text-cream/35 font-sans text-xs max-w-xs leading-relaxed">
-        💡 <strong className="text-cream/50">Pro tip:</strong> Embed a live feed by adding a free{" "}
-        <a href="https://behold.so" target="_blank" rel="noopener noreferrer" className="text-gold/60 hover:text-gold underline">Behold</a> or{" "}
-        <a href="https://elfsight.com" target="_blank" rel="noopener noreferrer" className="text-gold/60 hover:text-gold underline">Elfsight</a>{" "}
-        widget to <code className="text-gold/50">index.html</code>.
-      </p>
+
     </div>
   );
 }
@@ -108,7 +103,7 @@ export default function SocialFeed() {
         </div>
 
         {/* Cards */}
-        <div className={`grid grid-cols-1 ${cols} gap-8 justify-items-center`}>
+        <div className={`grid grid-cols-1 ${cols} gap-8 justify-items-center px-4 sm:px-0`}>
           <InstagramEmbed handle={INSTAGRAM_HANDLE} />
           {showFacebook && <FacebookEmbed page={FACEBOOK_PAGE} />}
         </div>

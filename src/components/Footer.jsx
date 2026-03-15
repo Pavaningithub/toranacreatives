@@ -19,8 +19,8 @@ export default function Footer() {
       {/* Gold top accent */}
       <div className="h-px w-full" style={{ background: "linear-gradient(90deg, transparent, #D4AF37, #800000, #D4AF37, transparent)" }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
 
           {/* Brand */}
           <div className="space-y-5">
@@ -32,18 +32,7 @@ export default function Footer() {
             <p className="text-cream/45 font-sans text-sm leading-relaxed max-w-xs">
               Bengaluru's most trusted South Indian traditional event management company. Rooted in culture, crafted with love.
             </p>
-            {WHATSAPP_NUMBER && (
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                target="_blank" rel="noopener noreferrer"
-                aria-label="Chat with Torana Creatives on WhatsApp"
-                className="inline-flex items-center gap-2 font-sans text-sm font-semibold transition-colors"
-                style={{ color: "#25D366" }}
-              >
-                <WhatsAppIcon className="w-5 h-5" />
-                WhatsApp Us
-              </a>
-            )}
+
           </div>
 
           {/* Quick links */}
@@ -80,14 +69,7 @@ export default function Footer() {
                 <span>🕐</span>
                 <span>Mon – Sat, 9 AM – 8 PM</span>
               </p>
-              {WHATSAPP_NUMBER && (
-                <p className="flex items-start gap-2">
-                  <span className="text-[#25D366]"><WhatsAppIcon /></span>
-                  <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="hover:text-[#1ebe5e] transition-colors font-semibold" style={{ color: "#25D366" }}>
-                    Chat on WhatsApp
-                  </a>
-                </p>
-              )}
+
             </div>
           </div>
         </div>

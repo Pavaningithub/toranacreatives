@@ -63,11 +63,11 @@ function ServiceCard({ svc, index }) {
       <div className={`absolute inset-0 bg-gradient-to-br ${svc.grad} -z-10`} />
 
       {/* Glow on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-2xl"
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-2xl pointer-events-none"
         style={{ boxShadow: `inset 0 0 60px 0 ${svc.accent}25` }} />
 
       {/* Border shimmer */}
-      <div className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-white/25 transition-colors duration-300" />
+      <div className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-white/25 transition-colors duration-300 pointer-events-none" />
 
       {/* Icon */}
       <div
