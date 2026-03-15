@@ -130,7 +130,7 @@ export default function Hero() {
 
         {/* Sub copy */}
         <p className="mt-5 text-cream/50 font-sans text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Vedic Weddings · Grahapravesha · Upanayana · Sathyanarayana Puja<br className="hidden sm:block" />
+          Vedic Weddings · Gruhapravesha · Upanayana · Sathyanarayana Puja<br className="hidden sm:block" />
           Crafted with devotion for Brahmin families across Bengaluru &amp; beyond.
         </p>
 

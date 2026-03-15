@@ -3,7 +3,7 @@ import { CONTACT_EMAIL, WHATSAPP_NUMBER, LOCATION } from "../config/launch";
 
 const EVENT_TYPES = [
   "Traditional Wedding & Muhurtham",
-  "Grahapravesha (Housewarming)",
+  "Gruhapravesha (Housewarming)",
   "Upanayana (Thread Ceremony)",
   "Floral & Eco-friendly Decor",
   "Seemantha / Baby Shower",

@@ -192,8 +192,8 @@ const GALLERY_ITEMS = [
     url: "/gallery/image2.jpg",
     alt: "Torana Creatives event photo 2",
     label: "Our Work",
-    category: "Grahapravesha",
+    category: "Gruhapravesha",
   },
 ];
 
-const CATEGORIES = ["All", "Wedding", "Floral", "Grahapravesha", "Upanayana"];
+const CATEGORIES = ["All", "Wedding", "Floral", "Gruhapravesha", "Upanayana"];

@@ -78,7 +78,7 @@ export default function About() {
               Born in Bengaluru, <strong className="text-gold">Torana (ತೋರಣ) Creatives</strong> was founded with one purpose: to keep South Indian cultural events as authentic, joyful, and spiritually meaningful as they have always been.
             </p>
             <p className="text-cream/70 font-sans text-sm sm:text-base leading-relaxed">
-              Our team of event planners, floral artists, and Vedic ritual coordinators has managed over <strong className="text-mustard">200+ events</strong> across Bengaluru, Mysuru, and beyond — from intimate Grahapravesha ceremonies to grand multi-day weddings with 1000+ guests.
+              Our team of event planners, floral artists, and Vedic ritual coordinators has managed over <strong className="text-mustard">200+ events</strong> across Bengaluru, Mysuru, and beyond — from intimate Gruhapravesha ceremonies to grand multi-day weddings with 1000+ guests.
             </p>
             <p className="text-cream/70 font-sans text-sm sm:text-base leading-relaxed">
               We respect each family's regional customs — Brahmin rituals of Mysuru, Vokkaliga traditions of rural Karnataka, Tamil Iyer customs. <em className="text-gold-light">Every detail is your family's detail.</em>
