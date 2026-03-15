@@ -78,7 +78,7 @@ export default function Footer() {
         <div className="mt-14 pt-8 border-t border-gold/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-sans text-cream/25">
           <p>© 2026 Torana (ತೋರಣ) Creatives. All rights reserved.</p>
           <p className="font-kannada text-cream/20">ಸರ್ವ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ</p>
-          <p>Crafted with 🪔 in Bengaluru</p>
+          <p>Crafted within Bengaluru 🪔</p>
         </div>
       </div>
     </footer>
