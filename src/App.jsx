@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
 import Projects from "./components/Projects";
+import Gallery from "./components/Gallery";
 import Testimonials from "./components/Testimonials";
 import SocialFeed from "./components/SocialFeed";
 import About from "./components/About";
@@ -24,6 +25,7 @@ export default function App() {
         <Hero />
         <Services />
         <Projects />
+        <Gallery />
         <Testimonials />
         <SocialFeed />
         <About />
