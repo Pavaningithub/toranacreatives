@@ -2,10 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabase";
 
 const BUCKET = "gallery";
-const EXT_VIDEO = ["mp4", "webm", "mov"];
 
-function ext(name) { return name.split(".").pop().toLowerCase(); }
-function isVideo(name) { return EXT_VIDEO.includes(ext(name)); }
+function isVideo(path) { return /\.(mp4|webm|mov)$/i.test(path); }
 
 function MediaCard({ item, onClick, index }) {
   const ref = useRef(null);
@@ -29,7 +27,6 @@ function MediaCard({ item, onClick, index }) {
         <img src={item.url} alt={item.caption || "Torana Creatives event"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
       )}
 
-      {/* Caption overlay */}
       {item.caption && (
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
           <p className="text-white font-serif text-sm leading-snug">{item.caption}</p>
@@ -47,9 +44,14 @@ function MediaCard({ item, onClick, index }) {
   );
 }
 
+function publicUrl(path) {
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+  return data.publicUrl;
+}
+
 export default function Gallery() {
-  const [items,   setItems]   = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [items,    setItems]    = useState([]);
+  const [loading,  setLoading]  = useState(true);
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => { loadGallery(); }, []);
@@ -57,35 +59,21 @@ export default function Gallery() {
   async function loadGallery() {
     if (!supabase) { setLoading(false); return; }
 
-    // List all files in the gallery bucket
-    const { data: files, error } = await supabase.storage.from(BUCKET).list("", {
-      limit: 200, sortBy: { column: "created_at", order: "desc" },
-    });
+    const { data, error } = await supabase
+      .from("gallery_items")
+      .select("id, path, caption")
+      .eq("is_visible", true)
+      .order("created_at", { ascending: false });
 
-    if (error || !files?.length) { setLoading(false); return; }
+    if (error) { setLoading(false); return; }
 
-    // Fetch optional captions from the gallery_captions table
-    const { data: captions } = await supabase
-      .from("gallery_captions")
-      .select("path, caption, is_visible")
-      .eq("is_visible", true);
-
-    const captionMap = Object.fromEntries((captions || []).map((c) => [c.path, c.caption]));
-
-    // Build item list — filter out hidden items and .gitkeep / system files
-    const result = files
-      .filter((f) => f.name && !f.name.startsWith(".") && f.id)
-      .map((f) => {
-        const { data } = supabase.storage.from(BUCKET).getPublicUrl(f.name);
-        return {
-          name: f.name,
-          url: data.publicUrl,
-          caption: captionMap[f.name] || null,
-          isVideo: isVideo(f.name),
-        };
-      });
-
-    setItems(result);
+    setItems((data || []).map((row) => ({
+      id: row.id,
+      path: row.path,
+      url: publicUrl(row.path),
+      caption: row.caption,
+      isVideo: isVideo(row.path),
+    })));
     setLoading(false);
   }
 
@@ -123,7 +111,7 @@ export default function Gallery() {
         {items.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {items.map((item, i) => (
-              <MediaCard key={item.name} item={item} onClick={setLightbox} index={i} />
+              <MediaCard key={item.id} item={item} onClick={setLightbox} index={i} />
             ))}
           </div>
         )}

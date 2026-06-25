@@ -131,7 +131,7 @@ function GalleryItem({ item, onDelete }) {
   const handleDelete = async () => {
     setDeleting(true);
     await supabase.storage.from(BUCKET).remove([item.name]);
-    await supabase.from("gallery_captions").delete().eq("path", item.name);
+    await supabase.from("gallery_items").delete().eq("path", item.name);
     onDelete(item.name);
   };
 
@@ -175,18 +175,15 @@ function AdminDashboard({ onLogout }) {
 
   async function loadExisting() {
     setLoadingGallery(true);
-    const { data: files } = await supabase.storage.from(BUCKET).list("", {
-      limit: 200, sortBy: { column: "created_at", order: "desc" },
-    });
-    const { data: captions } = await supabase.from("gallery_captions").select("path, caption");
-    const captionMap = Object.fromEntries((captions || []).map((c) => [c.path, c.caption]));
+    const { data } = await supabase
+      .from("gallery_items")
+      .select("id, path, caption")
+      .order("created_at", { ascending: false });
 
-    const items = (files || [])
-      .filter((f) => f.name && !f.name.startsWith(".") && f.id)
-      .map((f) => {
-        const { data } = supabase.storage.from(BUCKET).getPublicUrl(f.name);
-        return { name: f.name, url: data.publicUrl, caption: captionMap[f.name] || null, isVideo: /\.(mp4|webm|mov)$/i.test(f.name) };
-      });
+    const items = (data || []).map((row) => {
+      const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(row.path);
+      return { id: row.id, name: row.path, url: urlData.publicUrl, caption: row.caption, isVideo: /\.(mp4|webm|mov)$/i.test(row.path) };
+    });
     setExisting(items);
     setLoadingGallery(false);
   }
@@ -235,9 +232,11 @@ function AdminDashboard({ onLogout }) {
         continue;
       }
 
-      if (caption.trim()) {
-        await supabase.from("gallery_captions").upsert({ path: safeName, caption: caption.trim(), is_visible: true });
-      }
+      await supabase.from("gallery_items").insert({
+        path: safeName,
+        caption: caption.trim() || null,
+        is_visible: true,
+      });
 
       setSelected((prev) => prev.map((s, idx) => idx === i ? { ...s, uploading: false, progress: 100, done: true } : s));
     }
