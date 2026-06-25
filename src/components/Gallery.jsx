@@ -171,29 +171,3 @@ export default function Gallery() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-//  GALLERY IMAGES
-//  All photos are Hindu / South Indian traditional ceremonies.
-//  TO ADD YOUR OWN PHOTOS:
-//    1. Drop images into  public/gallery/  e.g. public/gallery/wedding-01.jpg
-//    2. Replace the `url` value with "/gallery/wedding-01.jpg"
-//    3. The site will serve them directly — no rebuild needed.
-// ─────────────────────────────────────────────────────────────
-const GALLERY_ITEMS = [
-  {
-    id: 1,
-    url: "/gallery/image1.png",
-    alt: "Torana Creatives event photo 1",
-    label: "Our Work",
-    category: "Wedding",
-  },
-  {
-    id: 2,
-    url: "/gallery/image2.jpg",
-    alt: "Torana Creatives event photo 2",
-    label: "Our Work",
-    category: "Gruhapravesha",
-  },
-];
-
-const CATEGORIES = ["All", "Wedding", "Floral", "Gruhapravesha", "Upanayana"];
