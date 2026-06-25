@@ -9,11 +9,14 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FeedbackPage from "./components/FeedbackPage";
+import AdminPage from "./components/AdminPage";
 
-// If the URL contains ?feedback=TC_x, show the standalone feedback page.
-const feedbackProject = new URLSearchParams(window.location.search).get("feedback");
+const params = new URLSearchParams(window.location.search);
+const feedbackProject = params.get("feedback");
+const isAdmin = params.has("admin");
 
 export default function App() {
+  if (isAdmin) return <AdminPage />;
   if (feedbackProject) {
     return <FeedbackPage projectId={feedbackProject.toUpperCase()} />;
   }
