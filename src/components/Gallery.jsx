@@ -121,8 +121,8 @@ export default function Gallery() {
           <div className="text-center py-20">
             <div className="text-6xl mb-4">📸</div>
             <p className="font-serif text-xl text-maroon/60 mb-2">Gallery coming soon</p>
-            <p className="font-sans text-xs text-maroon/35 italic">
-              Drop images/videos into <code className="bg-gold/10 px-1 rounded">public/gallery/</code> and run <code className="bg-gold/10 px-1 rounded">npm run gallery</code>
+            <p className="font-sans text-sm text-maroon/40 max-w-sm mx-auto">
+              We're curating our event photos and videos. Check back soon to see the memories we've created.
             </p>
           </div>
         ) : (

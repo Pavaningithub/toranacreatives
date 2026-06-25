@@ -78,7 +78,7 @@ export default function Testimonials() {
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(0);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ name: "", event: "", projectId: "", phone: "", rating: 5, text: "" });
+  const [form, setForm] = useState({ name: "", event: "", rating: 5, text: "" });
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const timerRef = useRef(null);
@@ -124,9 +124,7 @@ export default function Testimonials() {
 
     const payload = {
       reviewer_name: form.name.trim(),
-      event_type: form.event.trim(),
-      project_id: form.projectId.trim() || null,
-      phone: form.phone.trim() || null,
+      event_type: form.event.trim() || null,
       rating: Number(form.rating),
       review_text: form.text.trim(),
     };
@@ -140,9 +138,7 @@ export default function Testimonials() {
       "⭐ NEW REVIEW SUBMISSION",
       "",
       `Name: ${payload.reviewer_name}`,
-      payload.project_id ? `Project: ${payload.project_id}` : null,
-      `Event: ${payload.event_type || "—"}`,
-      payload.phone ? `Phone: ${payload.phone}` : null,
+      payload.event_type ? `Event: ${payload.event_type}` : null,
       `Rating: ${stars}`,
       "",
       `Review:\n"${payload.review_text}"`,
@@ -251,22 +247,9 @@ export default function Testimonials() {
                 <input type="text" value={form.name} onChange={update("name")} placeholder="e.g. Ramesh & Sunitha Kumar" required className={INPUT_CLS} />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
-                  <input type="text" value={form.event} onChange={update("event")} placeholder="e.g. Wedding, Gruhapravesha" className={INPUT_CLS} />
-                </div>
-                <div>
-                  <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Project ID</label>
-                  <input type="text" value={form.projectId} onChange={update("projectId")} placeholder="e.g. TC_1" className={INPUT_CLS} />
-                </div>
-              </div>
-
               <div>
-                <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">
-                  Contact Number <span className="text-cream/30 normal-case">(optional)</span>
-                </label>
-                <input type="tel" value={form.phone} onChange={update("phone")} placeholder="98XXXXXXXX" className={INPUT_CLS} />
+                <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
+                <input type="text" value={form.event} onChange={update("event")} placeholder="e.g. Wedding, Gruhapravesha, Birthday" className={INPUT_CLS} />
               </div>
 
               <div>
@@ -293,7 +276,7 @@ export default function Testimonials() {
                 </button>
               </div>
               <p className="text-cream/25 font-sans text-xs text-center">
-                Reviews are published after admin approval. 4-star+ reviews appear on the site.
+                Thank you for taking the time to share your experience with us. 🙏
               </p>
             </form>
           )}
@@ -303,7 +286,7 @@ export default function Testimonials() {
               <div className="text-5xl mb-4">🙏</div>
               <p className="font-serif text-xl text-gold-light mb-2">Thank you for your blessings!</p>
               <p className="text-cream/50 font-sans text-sm">
-                Your review has been received and will appear here after approval.
+                Your words mean everything to us. Thank you for being part of the Torana family.
               </p>
             </div>
           )}

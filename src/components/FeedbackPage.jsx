@@ -2,14 +2,6 @@ import { useState } from "react";
 import { WHATSAPP_NUMBER } from "../config/launch";
 import { supabase } from "../lib/supabase";
 
-// ─────────────────────────────────────────────────────────────
-//  FEEDBACK PAGE
-//  Shown when a customer visits /?feedback=TC_1
-//  Standalone page — no navigation, no main website.
-//  Submits to Supabase + sends WhatsApp notification.
-//  Reviews with rating > 4 appear publicly after admin approval.
-// ─────────────────────────────────────────────────────────────
-
 function StarPicker({ value, onChange }) {
   const [hover, setHover] = useState(0);
   return (
@@ -35,15 +27,29 @@ function StarPicker({ value, onChange }) {
 
 const RATING_LABELS = { 1: "Poor", 2: "Fair", 3: "Good", 4: "Very Good", 5: "Excellent!" };
 
+const EVENT_OPTIONS = [
+  "Wedding",
+  "Engagement",
+  "Housewarming (Gruhapravesha)",
+  "Upanayana (Thread Ceremony)",
+  "Birthday Celebration",
+  "Shashtipoorthi",
+  "Seemantha / Baby Shower",
+  "Other South Indian Ceremony",
+  "Other",
+];
+
 const INPUT_CLS = "w-full rounded-xl px-4 py-3.5 font-sans text-sm bg-white/8 border border-gold/20 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all";
 
 export default function FeedbackPage({ projectId }) {
-  const [form, setForm] = useState({ name: "", phone: "", eventType: "", text: "", rating: 5 });
+  const [form, setForm] = useState({ name: "", phone: "", eventType: "", customEventType: "", text: "", rating: 5 });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
   const update = (f) => (e) => setForm((p) => ({ ...p, [f]: e.target.value }));
+
+  const resolvedEventType = form.eventType === "Other" ? form.customEventType : form.eventType;
 
   const validate = () => {
     const e = {};
@@ -63,7 +69,7 @@ export default function FeedbackPage({ projectId }) {
       project_id: projectId,
       reviewer_name: form.name.trim(),
       phone: form.phone.trim() || null,
-      event_type: form.eventType.trim() || null,
+      event_type: resolvedEventType.trim() || null,
       rating: form.rating,
       review_text: form.text.trim(),
     };
@@ -105,9 +111,9 @@ export default function FeedbackPage({ projectId }) {
           <p className="text-cream/60 font-sans text-sm leading-relaxed mb-6">
             Thank you for sharing your experience. Your feedback means the world to us and helps us serve every family with greater devotion.
           </p>
-          <div className="text-cream/25 font-sans text-xs">
-            {form.rating > 4
-              ? "Your review will be visible on our website after approval."
+          <div className="text-cream/30 font-sans text-xs">
+            {form.rating >= 4
+              ? "Your review may be featured on our website."
               : "Your feedback has been recorded and will help us improve."}
           </div>
         </div>
@@ -119,7 +125,6 @@ export default function FeedbackPage({ projectId }) {
     <div className="min-h-screen flex flex-col"
       style={{ background: "linear-gradient(160deg,#080000 0%,#280000 40%,#050000 100%)" }}>
 
-      {/* Header */}
       <header className="px-6 py-6 border-b border-gold/10">
         <div className="max-w-lg mx-auto flex items-center justify-between">
           <div>
@@ -133,15 +138,11 @@ export default function FeedbackPage({ projectId }) {
         </div>
       </header>
 
-      {/* Form */}
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="max-w-lg w-full">
-          {/* Intro */}
           <div className="text-center mb-10">
             <p className="text-mustard text-xs tracking-[0.35em] uppercase font-semibold font-sans mb-3">Share Your Experience</p>
-            <h1 className="font-serif text-3xl sm:text-4xl text-cream mb-3">
-              How did we do?
-            </h1>
+            <h1 className="font-serif text-3xl sm:text-4xl text-cream mb-3">How did we do?</h1>
             <p className="text-cream/45 font-sans text-sm leading-relaxed">
               Your honest feedback helps us serve every family better. It only takes a minute.
             </p>
@@ -150,7 +151,6 @@ export default function FeedbackPage({ projectId }) {
           <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl p-6 sm:p-8"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(212,175,55,0.15)" }}>
 
-            {/* Star rating */}
             <div className="text-center">
               <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-4">Your Rating *</label>
               <StarPicker value={form.rating} onChange={(n) => setForm((p) => ({ ...p, rating: n }))} />
@@ -163,17 +163,29 @@ export default function FeedbackPage({ projectId }) {
               {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">
-                  Phone <span className="text-cream/25 normal-case">(optional)</span>
-                </label>
-                <input type="tel" value={form.phone} onChange={update("phone")} placeholder="98XXXXXXXX" className={INPUT_CLS} />
-              </div>
-              <div>
-                <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
-                <input type="text" value={form.eventType} onChange={update("eventType")} placeholder="e.g. Wedding" className={INPUT_CLS} />
-              </div>
+            <div>
+              <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">
+                Phone <span className="text-cream/25 normal-case">(optional)</span>
+              </label>
+              <input type="tel" value={form.phone} onChange={update("phone")} placeholder="98XXXXXXXX" className={INPUT_CLS} />
+            </div>
+
+            <div>
+              <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
+              <select value={form.eventType} onChange={update("eventType")}
+                className={INPUT_CLS + " bg-[#1a0000] appearance-none cursor-pointer"}>
+                <option value="">— Select your event —</option>
+                {EVENT_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+              </select>
+              {form.eventType === "Other" && (
+                <input
+                  type="text"
+                  value={form.customEventType}
+                  onChange={update("customEventType")}
+                  placeholder="Please describe your event"
+                  className={INPUT_CLS + " mt-2"}
+                />
+              )}
             </div>
 
             <div>
@@ -191,7 +203,7 @@ export default function FeedbackPage({ projectId }) {
             </button>
 
             <p className="text-cream/20 font-sans text-xs text-center leading-relaxed">
-              Reviews with 5 stars are featured on our website. All feedback is read by the Torana team.
+              Every word you share is read with gratitude by the Torana family. 🙏
             </p>
           </form>
         </div>

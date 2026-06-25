@@ -19,7 +19,7 @@ function BeholdFeed({ feedId }) {
     const script = document.createElement("script");
     script.id = "behold-widget-script";
     script.src = "https://w.behold.so/widget.js";
-    script.defer = true;
+    script.type = "module";
     document.head.appendChild(script);
   }, [feedId]);
 
@@ -39,7 +39,7 @@ function BeholdFeed({ feedId }) {
         </a>
       </div>
       <div className="p-4" style={{ background: "rgba(10,0,0,0.6)" }}>
-        <div id={`BeholdWidget-${feedId}`} />
+        <behold-widget feed-id={feedId}></behold-widget>
       </div>
     </div>
   );

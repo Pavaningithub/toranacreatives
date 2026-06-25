@@ -2,19 +2,20 @@ import { useState } from "react";
 import { CONTACT_EMAIL, WHATSAPP_NUMBER, LOCATION } from "../config/launch";
 
 const EVENT_TYPES = [
-  "Traditional Wedding & Muhurtha",
-  "Gruhapravesha (Housewarming)",
+  "Wedding",
+  "Engagement",
+  "Housewarming (Gruhapravesha)",
   "Upanayana (Thread Ceremony)",
   "Birthday Celebration",
-  "Shashtipoorthi (60th Birthday)",
+  "Shashtipoorthi",
   "Seemantha / Baby Shower",
-  "Other South Indian Event",
+  "Other South Indian Ceremony",
 ];
 
 const BENGALURU_AREAS = [
   "Indiranagar", "Koramangala", "Jayanagar", "Rajajinagar",
   "Whitefield", "Electronic City", "Malleshwaram",
-  "Yelahanka", "Bannerghatta Road", "Mysuru Road", "Other",
+  "Yelahanka", "Bannerghatta Road", "Mysuru Road", "Tumkur", "Other",
 ];
 
 function WhatsAppIcon({ className = "w-5 h-5" }) {
@@ -31,6 +32,7 @@ const buildMsg = (d) =>
 export default function Contact() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", eventType: "", eventDate: "", location: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
   const validate = () => {
@@ -43,12 +45,23 @@ export default function Contact() {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setErrors({});
+    setSubmitting(true);
+
+    // Store enquiry + send Telegram notification (non-blocking)
+    fetch("/api/enquiry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    }).catch(() => {});
+
+    // Open WhatsApp with pre-filled message
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMsg(form))}`, "_blank", "noopener,noreferrer");
+    setSubmitting(false);
     setSubmitted(true);
   };
 
@@ -68,7 +81,7 @@ export default function Contact() {
           <div className="text-6xl mb-6">🙏</div>
           <h3 className="font-serif text-3xl text-maroon mb-3">Namaskara!</h3>
           <p className="text-maroon/65 font-sans mb-6 leading-relaxed">
-            Your enquiry has been sent via WhatsApp. We'll reach out shortly to craft your perfect celebration.
+            Your enquiry has been received. We'll reach out shortly to craft your perfect celebration.
           </p>
           <p className="text-gold font-serif italic text-lg mb-8">"May your celebrations be filled with joy and tradition."</p>
           <button onClick={() => setSubmitted(false)} className="px-8 py-3 font-sans font-semibold text-sm tracking-wider uppercase rounded-sm" style={{ background: "linear-gradient(135deg,#D4AF37,#c9991e)", color: "#1a0000" }}>
@@ -83,7 +96,6 @@ export default function Contact() {
     <section id="contact" className="py-24 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
         <div className="text-center mb-14">
           <span className="text-gold text-xs tracking-[0.35em] uppercase font-semibold font-sans">Get In Touch</span>
           <h2 className="font-serif text-4xl sm:text-5xl text-maroon-dark mt-3 mb-4">Plan Your Celebration</h2>
@@ -99,7 +111,6 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
-          {/* Sidebar — shown BELOW form on mobile */}
           <div className="lg:col-span-2 order-2 lg:order-1 space-y-5">
             <div className="rounded-2xl p-6 space-y-5" style={{ background: "linear-gradient(135deg,#2d0000,#5c0000)", border: "1px solid rgba(212,175,55,0.2)" }}>
               <h3 className="font-serif text-xl text-gold-light">Reach Us Directly</h3>
@@ -114,11 +125,8 @@ export default function Contact() {
                 </div>
               ))}
             </div>
-
-
           </div>
 
-          {/* Form — shown FIRST on mobile */}
           <form
             onSubmit={handleSubmit}
             className="lg:col-span-3 order-1 lg:order-2 rounded-2xl p-5 sm:p-8 space-y-5 bg-white shadow-gold"
@@ -160,7 +168,7 @@ export default function Contact() {
                 {errors.eventDate && <p className="text-red-500 text-xs mt-1">{errors.eventDate}</p>}
               </div>
               <div>
-                <label className="block text-maroon/55 font-sans text-xs uppercase tracking-wider mb-1.5">Area in Bengaluru *</label>
+                <label className="block text-maroon/55 font-sans text-xs uppercase tracking-wider mb-1.5">Your Area *</label>
                 <select value={form.location} onChange={update("location")} className={inputCls("location")}>
                   <option value="">— Select Area —</option>
                   {BENGALURU_AREAS.map((a) => <option key={a} value={a}>{a}</option>)}
@@ -176,13 +184,16 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-3 w-full py-4 rounded-lg font-sans font-bold text-sm tracking-wider uppercase transition-all hover:scale-[1.02] animate-pulse-gold"
+              disabled={submitting}
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-lg font-sans font-bold text-sm tracking-wider uppercase transition-all hover:scale-[1.02] disabled:opacity-60"
               style={{ background: "linear-gradient(135deg,#D4AF37,#c9991e)", color: "#1a0000" }}
             >
               <WhatsAppIcon className="w-5 h-5" />
-              Send Enquiry via WhatsApp
+              {submitting ? "Sending…" : "Send Enquiry"}
             </button>
-            <p className="text-center text-maroon/35 font-sans text-xs">WhatsApp will open with your details pre-filled.</p>
+            <p className="text-center text-maroon/35 font-sans text-xs">
+              WhatsApp will open with your details pre-filled. Your enquiry is also saved securely.
+            </p>
           </form>
         </div>
       </div>

@@ -1,67 +1,60 @@
 import { useRef, useEffect, useState } from "react";
 
-// ─────────────────────────────────────────────────────────────
-//  PROJECTS — TC_1 through TC_5
-//  Update the PROJECTS array with actual event details.
-//  Send feedback URLs to customers:
-//    https://toranacreatives.in/?feedback=TC_1
-// ─────────────────────────────────────────────────────────────
-
 const PROJECTS = [
   {
-    id: "TC_1",
-    title: "Traditional South Indian Wedding",
-    eventType: "Vedic Wedding",
-    icon: "🪔",
-    location: "Bengaluru",
+    id: "TC_01",
+    title: "Shashi's Engagement",
+    eventType: "Engagement Ceremony",
+    icon: "💍",
+    location: "Subramanya Matt, Bengaluru",
     year: "2025",
-    highlights: ["Muhurtham planning", "Mantapa décor", "Full ritual coordination"],
+    description: "A beautifully woven engagement ceremony steeped in South Indian tradition — every ritual a thread in a lifelong memory.",
     grad: "from-[#2d0000] to-[#5c0000]",
     accent: "#D4AF37",
   },
   {
-    id: "TC_2",
-    title: "Gruhapravesha Ceremony",
+    id: "TC_02",
+    title: "Gruhapravesha at Pine 1702",
     eventType: "Housewarming",
     icon: "🏠",
     location: "Bengaluru",
     year: "2025",
-    highlights: ["Rangoli & kolam art", "Torana entrance", "Puja room setup"],
+    description: "Sacred kolam, floral torana, and Vedic blessings brought a new home to life — not just a house, but a memory.",
+    grad: "from-[#1a1a2e] to-[#16213e]",
+    accent: "#fde68a",
+  },
+  {
+    id: "TC_03",
+    title: "Mahesh's Home Blessing",
+    eventType: "Housewarming",
+    icon: "🪔",
+    location: "Bengaluru",
+    year: "2025",
+    description: "An intimate Gruhapravesha filled with the warmth of diyas, the fragrance of flowers, and the joy of family.",
     grad: "from-[#1a2a00] to-[#2d4a00]",
     accent: "#86efac",
   },
   {
-    id: "TC_3",
-    title: "Sacred Thread Ceremony",
-    eventType: "Upanayana",
-    icon: "🧵",
+    id: "TC_04",
+    title: "Traditional Engagement",
+    eventType: "Engagement Ceremony",
+    icon: "💐",
     location: "Bengaluru",
     year: "2025",
-    highlights: ["Vedic ritual management", "Pandit coordination", "Floral décor"],
+    description: "A joyful union of two families, celebrated with full South Indian customs, vibrant décor, and heartfelt moments.",
     grad: "from-[#00152d] to-[#001a3d]",
     accent: "#93c5fd",
   },
   {
-    id: "TC_4",
-    title: "Birthday Celebration",
+    id: "TC_05",
+    title: "Dhanvi's Birthday Celebration",
     eventType: "Birthday",
     icon: "🎂",
-    location: "Bengaluru",
+    location: "Tumkur",
     year: "2025",
-    highlights: ["Theme decoration", "Balloon & floral setup", "Cake ceremony"],
+    description: "A vibrant birthday bash with fun activities and thoughtful décor that left the birthday child glowing with happiness.",
     grad: "from-[#1a0030] to-[#300060]",
     accent: "#d8b4fe",
-  },
-  {
-    id: "TC_5",
-    title: "60th Birthday Milestone",
-    eventType: "Shashtipoorthi",
-    icon: "🙏",
-    location: "Bengaluru",
-    year: "2025",
-    highlights: ["Vedic Saptapadi renewal", "Pada Pooja ceremony", "Traditional décor"],
-    grad: "from-[#001a1a] to-[#003030]",
-    accent: "#5eead4",
   },
 ];
 
@@ -75,21 +68,17 @@ function ProjectCard({ project, index }) {
     return () => obs.disconnect();
   }, []);
 
-  const feedbackUrl = `${window.location.origin}/?feedback=${project.id}`;
-
   return (
     <div
       ref={ref}
       className={`group relative overflow-hidden rounded-2xl p-6 flex flex-col gap-4 transition-all duration-700 hover:scale-[1.02] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      {/* Background */}
       <div className={`absolute inset-0 bg-gradient-to-br ${project.grad}`} />
       <div className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-white/25 transition-colors duration-300 pointer-events-none" />
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"
         style={{ boxShadow: `inset 0 0 60px 0 ${project.accent}20` }} />
 
-      {/* Project badge */}
       <div className="relative z-10 flex items-start justify-between">
         <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
           style={{ background: `${project.accent}18`, border: `1.5px solid ${project.accent}40` }}>
@@ -107,7 +96,6 @@ function ProjectCard({ project, index }) {
         </div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 flex-1">
         <p className="font-sans text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: project.accent }}>
           {project.eventType}
@@ -116,33 +104,11 @@ function ProjectCard({ project, index }) {
           {project.title}
         </h3>
         <p className="text-white/50 font-sans text-xs mb-4">
-          📍 {project.location} &nbsp;·&nbsp; {project.year}
+          📍 {project.location}&nbsp;·&nbsp;{project.year}
         </p>
-        <ul className="flex flex-wrap gap-1.5 mb-4">
-          {project.highlights.map((h) => (
-            <li key={h} className="text-[11px] font-sans font-medium px-2.5 py-0.5 rounded-full"
-              style={{ background: `${project.accent}12`, color: `${project.accent}cc`, border: `1px solid ${project.accent}25` }}>
-              {h}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Feedback link */}
-      <div className="relative z-10 pt-4 border-t border-white/10">
-        <p className="text-white/35 font-sans text-[11px] mb-2">Send feedback link to client:</p>
-        <div className="flex items-center gap-2">
-          <code className="text-[11px] font-mono text-white/50 bg-white/5 rounded px-2 py-1 flex-1 truncate">
-            {feedbackUrl}
-          </code>
-          <button
-            onClick={() => navigator.clipboard?.writeText(feedbackUrl).catch(() => {})}
-            className="flex-shrink-0 text-[11px] font-sans font-bold px-3 py-1.5 rounded-lg transition-all hover:scale-105"
-            style={{ background: `${project.accent}25`, color: project.accent, border: `1px solid ${project.accent}40` }}
-            title="Copy feedback link">
-            Copy
-          </button>
-        </div>
+        <p className="font-sans text-sm text-white/65 leading-relaxed italic">
+          "{project.description}"
+        </p>
       </div>
     </div>
   );
@@ -154,7 +120,6 @@ export default function Projects() {
       style={{ background: "linear-gradient(160deg,#0a0000 0%,#200000 40%,#0a0000 100%)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
         <div className="text-center mb-16">
           <span className="text-mustard text-xs tracking-[0.35em] uppercase font-semibold font-sans">Portfolio</span>
           <h2 className="font-serif text-4xl sm:text-5xl text-cream mt-3 mb-4">Our Completed Projects</h2>
@@ -164,15 +129,14 @@ export default function Projects() {
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/40" />
           </div>
           <p className="text-cream/50 font-sans text-sm max-w-xl mx-auto leading-relaxed">
-            Each project is tracked with a unique ID. Click "Copy" to send the feedback link to your client.
+            We don't just create decorations — we create memories. Here are the families we've had the honour of serving.
           </p>
         </div>
 
-        {/* Stats bar */}
         <div className="flex flex-wrap justify-center gap-8 mb-14">
           {[
             { num: PROJECTS.length, label: "Projects Completed", icon: "✦" },
-            { num: PROJECTS.filter(p => p.eventType === "Vedic Wedding").length, label: "Weddings", icon: "🪔" },
+            { num: 2, label: "Weddings & Engagements", icon: "💍" },
             { num: PROJECTS.length, label: "Happy Families", icon: "🙏" },
           ].map(({ num, label, icon }) => (
             <div key={label} className="text-center">
@@ -182,19 +146,10 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {PROJECTS.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
-        </div>
-
-        {/* Info note */}
-        <div className="mt-12 text-center">
-          <p className="text-cream/25 font-sans text-xs max-w-lg mx-auto leading-relaxed">
-            Project IDs (TC_1 etc.) are used to link gallery photos, customer feedback, and event records.
-            Photos named <code className="bg-gold/10 px-1 rounded">TC_1_photo.jpg</code> will automatically appear in the gallery under the correct project.
-          </p>
         </div>
       </div>
     </section>
