@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabase";
 
 const BUCKET = "gallery";
+const MAX_IMAGE_MB = 5;
+const MAX_VIDEO_MB = 30;
+const MAX_IMAGE_BYTES = MAX_IMAGE_MB * 1024 * 1024;
+const MAX_VIDEO_BYTES = MAX_VIDEO_MB * 1024 * 1024;
 
 // ─────────────────────────────────────────────────────────────
 //  ADMIN UPLOAD PAGE
@@ -186,8 +190,17 @@ function AdminDashboard({ onLogout }) {
   }
 
   const addFiles = (files) => {
-    const arr = Array.from(files).filter((f) => f.type.startsWith("image/") || f.type.startsWith("video/"));
-    setSelected((prev) => [...prev, ...arr.map((file) => ({ file, caption: "", uploading: false, progress: 0, done: false, error: "" }))]);
+    const entries = Array.from(files)
+      .filter((f) => f.type.startsWith("image/") || f.type.startsWith("video/"))
+      .map((file) => {
+        const isVideo = file.type.startsWith("video/");
+        const limit   = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
+        const limitMB = isVideo ? MAX_VIDEO_MB    : MAX_IMAGE_MB;
+        const sizeMB  = (file.size / 1024 / 1024).toFixed(1);
+        const error   = file.size > limit ? `File is ${sizeMB} MB — max is ${limitMB} MB for ${isVideo ? "videos" : "images"}` : "";
+        return { file, caption: "", uploading: false, progress: 0, done: false, error };
+      });
+    setSelected((prev) => [...prev, ...entries]);
   };
 
   const handleDrop = (e) => {
@@ -201,7 +214,7 @@ function AdminDashboard({ onLogout }) {
 
   const uploadAll = async () => {
     for (let i = 0; i < selected.length; i++) {
-      if (selected[i].done) continue;
+      if (selected[i].done || selected[i].error) continue;
       setSelected((prev) => prev.map((s, idx) => idx === i ? { ...s, uploading: true, progress: 10 } : s));
 
       const { file, caption } = selected[i];
@@ -233,7 +246,7 @@ function AdminDashboard({ onLogout }) {
     setTimeout(() => setSelected((prev) => prev.filter((s) => !s.done)), 1500);
   };
 
-  const pendingCount = selected.filter((s) => !s.done).length;
+  const pendingCount = selected.filter((s) => !s.done && !s.error).length;
 
   return (
     <div className="min-h-screen" style={{ background: "linear-gradient(160deg,#0a0000 0%,#1a0000 60%,#0a0000 100%)" }}>
@@ -275,7 +288,15 @@ function AdminDashboard({ onLogout }) {
             <div className="text-5xl">📁</div>
             <div className="text-center">
               <p className="text-cream/70 font-sans text-sm font-semibold">Drag & drop images or videos here</p>
-              <p className="text-cream/30 font-sans text-xs mt-1">or click to browse — JPG, PNG, MP4, MOV supported</p>
+              <p className="text-cream/30 font-sans text-xs mt-1">or click to browse — JPG, PNG, MP4, MOV</p>
+              <div className="flex items-center justify-center gap-4 mt-3">
+                <span className="text-[11px] font-sans px-2.5 py-1 rounded-full" style={{ background: "rgba(212,175,55,0.12)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.25)" }}>
+                  📷 Images — max 5 MB
+                </span>
+                <span className="text-[11px] font-sans px-2.5 py-1 rounded-full" style={{ background: "rgba(212,175,55,0.12)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.25)" }}>
+                  🎥 Videos — max 30 MB
+                </span>
+              </div>
             </div>
             <input ref={inputRef} type="file" multiple accept="image/*,video/*" className="hidden" onChange={(e) => addFiles(e.target.files)} />
           </div>
