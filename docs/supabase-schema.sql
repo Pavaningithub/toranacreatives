@@ -6,7 +6,7 @@
 --  After running:
 --  1. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel
 --  2. Reviews submitted via the website are stored here
---  3. To approve a review: open Table Editor → reviews → set is_approved = true
+--  3. Ratings >= 4 are auto-approved by the trigger below
 --  4. Only approved reviews with rating > 4 show on the public website
 -- ─────────────────────────────────────────────────────────────
 
@@ -48,6 +48,28 @@ CREATE POLICY "admin_full_access" ON reviews
   FOR ALL TO authenticated
   USING (true)
   WITH CHECK (true);
+
+-- ── Auto-approval trigger ─────────────────────────────────────
+-- Ratings >= 4 are automatically approved on insert.
+-- Ratings 1–3 stay is_approved=false (stored but never shown publicly).
+-- The SELECT policy still gates public display at rating > 4,
+-- so 4-star reviews are approved (trusted) but not shown on the website.
+
+CREATE OR REPLACE FUNCTION auto_approve_high_rated_review()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.rating >= 4 THEN
+    NEW.is_approved := true;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS trigger_auto_approve_review ON reviews;
+CREATE TRIGGER trigger_auto_approve_review
+  BEFORE INSERT ON reviews
+  FOR EACH ROW
+  EXECUTE FUNCTION auto_approve_high_rated_review();
 
 -- ── Phone column: never return via public API ─────────────────
 -- The SELECT policy above already restricts rows, but for defense in depth
