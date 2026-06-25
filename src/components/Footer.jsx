@@ -39,7 +39,7 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-gold-light text-base mb-5 tracking-wider">Quick Links</h4>
             <ul className="space-y-3">
-              {[["#hero","Home"],["#services","Services"],["#gallery","Gallery"],["#about","About Us"],["#contact","Contact"]].map(([href, label]) => (
+              {[["#hero","Home"],["#services","Services"],["#projects","Projects"],["#about","About Us"],["#contact","Contact"]].map(([href, label]) => (
                 <li key={href}>
                   <button
                     onClick={() => scrollTo(href)}

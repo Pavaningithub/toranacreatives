@@ -158,10 +158,6 @@ export default function Hero() {
             className="px-8 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm border-2 border-gold/55 text-gold hover:bg-gold/10 transition-all duration-300 w-full sm:w-auto">
             ✦ Our Services
           </button>
-          <button onClick={() => scrollTo("#gallery")}
-            className="px-8 py-4 font-sans font-bold text-sm tracking-wider uppercase rounded-sm border border-cream/12 text-cream/50 hover:border-cream/35 hover:text-cream transition-all duration-300 w-full sm:w-auto">
-            View Gallery
-          </button>
         </div>
 
         {/* Instagram quick-link */}
