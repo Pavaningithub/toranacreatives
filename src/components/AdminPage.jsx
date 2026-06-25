@@ -49,14 +49,16 @@ function LoginForm({ onLogin }) {
             <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Email</label>
             <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="w-full rounded-xl px-4 py-3 font-sans text-sm bg-white/8 border border-gold/20 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all" />
+              className="w-full rounded-xl px-4 py-3 font-sans text-sm border border-gold/20 placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all"
+              style={{ background: "rgba(255,255,255,0.08)", color: "#FFFDD0", WebkitTextFillColor: "#FFFDD0" }} />
           </div>
 
           <div>
             <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Password</label>
             <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full rounded-xl px-4 py-3 font-sans text-sm bg-white/8 border border-gold/20 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all" />
+              className="w-full rounded-xl px-4 py-3 font-sans text-sm border border-gold/20 placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all"
+              style={{ background: "rgba(255,255,255,0.08)", color: "#FFFDD0", WebkitTextFillColor: "#FFFDD0" }} />
           </div>
 
           {error && <p className="text-red-400 text-xs text-center">{error}</p>}
