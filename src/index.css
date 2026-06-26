@@ -17,6 +17,21 @@
 
   h1, h2, h3 { @apply font-serif; }
   .kannada { @apply font-kannada; }
+
+  /* Prevent WebKit from overriding typed text color in form fields.
+     Without this, -webkit-text-fill-color takes precedence over the CSS
+     color property, making text invisible against custom dark backgrounds. */
+  input, textarea, select {
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /* Keep autofill text readable by inheriting the element's own color. */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: inherit;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }
 
 /* ── Reusable components ─────────────────────────────────── */

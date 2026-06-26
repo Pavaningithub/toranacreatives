@@ -1,13 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { WHATSAPP_NUMBER } from "../config/launch";
 import { supabase } from "../lib/supabase";
-
-// ─────────────────────────────────────────────────────────────
-//  TESTIMONIALS
-//  Reviews come from Supabase (is_approved=true, rating>4).
-//  If Supabase is not configured, the carousel shows an
-//  empty state and submissions fall back to WhatsApp.
-// ─────────────────────────────────────────────────────────────
 
 function Stars({ count = 5, interactive = false, onSelect }) {
   return (
@@ -71,7 +63,8 @@ function TestimonialCard({ t, active }) {
   );
 }
 
-const INPUT_CLS = "w-full rounded-lg px-4 py-3 font-sans text-sm bg-white/10 border border-gold/25 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/20";
+const INPUT_CLS = "w-full rounded-lg px-4 py-3 font-sans text-sm border border-gold/25 placeholder:text-cream/25 focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/20";
+const INPUT_STYLE = { background: "#1a0505", color: "#FFFDD0", WebkitTextFillColor: "#FFFDD0" };
 
 export default function Testimonials() {
   const [reviews, setReviews] = useState([]);
@@ -129,26 +122,11 @@ export default function Testimonials() {
       review_text: form.text.trim(),
     };
 
-    if (supabase) {
-      await supabase.from("reviews").insert([payload]);
-    }
-
-    const stars = "⭐".repeat(payload.rating);
-    const msg = [
-      "⭐ NEW REVIEW SUBMISSION",
-      "",
-      `Name: ${payload.reviewer_name}`,
-      payload.event_type ? `Event: ${payload.event_type}` : null,
-      `Rating: ${stars}`,
-      "",
-      `Review:\n"${payload.review_text}"`,
-      "",
-      "— Submitted via toranacreatives.in",
-    ].filter(Boolean).join("\n");
-
-    if (WHATSAPP_NUMBER) {
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
-    }
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
 
     setSubmitting(false);
     setSent(true);
@@ -244,12 +222,12 @@ export default function Testimonials() {
 
               <div>
                 <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Your Name *</label>
-                <input type="text" value={form.name} onChange={update("name")} placeholder="e.g. Ramesh & Sunitha Kumar" required className={INPUT_CLS} />
+                <input type="text" value={form.name} onChange={update("name")} placeholder="e.g. Ramesh & Sunitha Kumar" required className={INPUT_CLS} style={INPUT_STYLE} />
               </div>
 
               <div>
                 <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
-                <input type="text" value={form.event} onChange={update("event")} placeholder="e.g. Wedding, Gruhapravesha, Birthday" className={INPUT_CLS} />
+                <input type="text" value={form.event} onChange={update("event")} placeholder="e.g. Wedding, Gruhapravesha, Birthday" className={INPUT_CLS} style={INPUT_STYLE} />
               </div>
 
               <div>
@@ -261,7 +239,7 @@ export default function Testimonials() {
                 <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Your Review *</label>
                 <textarea value={form.text} onChange={update("text")} rows={4} required
                   placeholder="Tell us about your experience with Torana Creatives…"
-                  className={`${INPUT_CLS} resize-none`} />
+                  className={`${INPUT_CLS} resize-none`} style={INPUT_STYLE} />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { WHATSAPP_NUMBER } from "../config/launch";
-import { supabase } from "../lib/supabase";
 
 function StarPicker({ value, onChange }) {
   const [hover, setHover] = useState(0);
@@ -39,7 +37,8 @@ const EVENT_OPTIONS = [
   "Other",
 ];
 
-const INPUT_CLS = "w-full rounded-xl px-4 py-3.5 font-sans text-sm bg-white/8 border border-gold/20 text-cream placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all";
+const INPUT_CLS = "w-full rounded-xl px-4 py-3.5 font-sans text-sm border border-gold/20 placeholder:text-cream/25 focus:outline-none focus:border-gold/55 focus:ring-2 focus:ring-gold/15 transition-all";
+const INPUT_STYLE = { background: "#1a0505", color: "#FFFDD0", WebkitTextFillColor: "#FFFDD0" };
 
 export default function FeedbackPage({ projectId }) {
   const [form, setForm] = useState({ name: "", phone: "", eventType: "", customEventType: "", text: "", rating: 5 });
@@ -65,36 +64,18 @@ export default function FeedbackPage({ projectId }) {
     setErrors({});
     setSubmitting(true);
 
-    const payload = {
-      project_id: projectId,
-      reviewer_name: form.name.trim(),
-      phone: form.phone.trim() || null,
-      event_type: resolvedEventType.trim() || null,
-      rating: form.rating,
-      review_text: form.text.trim(),
-    };
-
-    if (supabase) {
-      await supabase.from("reviews").insert([payload]);
-    }
-
-    const stars = "⭐".repeat(payload.rating);
-    const msg = [
-      `⭐ CUSTOMER FEEDBACK — ${projectId}`,
-      "",
-      `Name: ${payload.reviewer_name}`,
-      payload.phone ? `Phone: ${payload.phone}` : null,
-      payload.event_type ? `Event: ${payload.event_type}` : null,
-      `Rating: ${stars} (${RATING_LABELS[payload.rating]})`,
-      "",
-      `"${payload.review_text}"`,
-      "",
-      "— Submitted via toranacreatives.in feedback link",
-    ].filter(Boolean).join("\n");
-
-    if (WHATSAPP_NUMBER) {
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
-    }
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        project_id:    projectId,
+        reviewer_name: form.name.trim(),
+        phone:         form.phone.trim() || null,
+        event_type:    resolvedEventType.trim() || null,
+        rating:        form.rating,
+        review_text:   form.text.trim(),
+      }),
+    }).catch(() => {});
 
     setSubmitting(false);
     setSubmitted(true);
@@ -159,7 +140,7 @@ export default function FeedbackPage({ projectId }) {
 
             <div>
               <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Your Name *</label>
-              <input type="text" value={form.name} onChange={update("name")} placeholder="Your full name" className={INPUT_CLS} />
+              <input type="text" value={form.name} onChange={update("name")} placeholder="Your full name" className={INPUT_CLS} style={INPUT_STYLE} />
               {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
             </div>
 
@@ -167,13 +148,13 @@ export default function FeedbackPage({ projectId }) {
               <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">
                 Phone <span className="text-cream/25 normal-case">(optional)</span>
               </label>
-              <input type="tel" value={form.phone} onChange={update("phone")} placeholder="98XXXXXXXX" className={INPUT_CLS} />
+              <input type="tel" value={form.phone} onChange={update("phone")} placeholder="98XXXXXXXX" className={INPUT_CLS} style={INPUT_STYLE} />
             </div>
 
             <div>
               <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Event Type</label>
               <select value={form.eventType} onChange={update("eventType")}
-                className={INPUT_CLS + " bg-[#1a0000] appearance-none cursor-pointer"}>
+                className={INPUT_CLS + " appearance-none cursor-pointer"} style={INPUT_STYLE}>
                 <option value="">— Select your event —</option>
                 {EVENT_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
               </select>
@@ -184,6 +165,7 @@ export default function FeedbackPage({ projectId }) {
                   onChange={update("customEventType")}
                   placeholder="Please describe your event"
                   className={INPUT_CLS + " mt-2"}
+                  style={INPUT_STYLE}
                 />
               )}
             </div>
@@ -192,7 +174,7 @@ export default function FeedbackPage({ projectId }) {
               <label className="block text-cream/50 text-xs uppercase tracking-wider font-sans mb-1.5">Your Experience *</label>
               <textarea value={form.text} onChange={update("text")} rows={5} required
                 placeholder="Tell us what you loved about our service, what we did well, or how we can improve…"
-                className={`${INPUT_CLS} resize-none`} />
+                className={`${INPUT_CLS} resize-none`} style={INPUT_STYLE} />
               {errors.text && <p className="text-red-400 text-xs mt-1">{errors.text}</p>}
             </div>
 
